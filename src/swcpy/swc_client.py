@@ -5,6 +5,7 @@ from .schemas import League, Player, Performance
 from typing import List
 import backoff 
 import logging 
+from urllib.parse import urljoin
 
 logger= logging.getLogger(__name__) 
 class SWCClient:
@@ -133,6 +134,16 @@ class SWCClient:
         
         response= self.call_api(self.LIST_LEAGUES_ENDPOINT, params)
         return [League(**league) for league in response.json()]
+    
+
+    def get_bulk_player_file(self) -> bytes:
+        """ Returns a bulk file with a player data"""
+        logger.debug("Entered bulk player file ")
+        player_file_path = urljoin(self.BULK_FILE_BASE_URL + self.BULK_FILE_NAMES['players'])
+        response= httpx.get(player_file_path, follow_redirects= True)
+        return response.content
+    
+    
 
         
             
