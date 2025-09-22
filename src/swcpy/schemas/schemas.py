@@ -43,7 +43,7 @@ class League(BaseModel):
     league_id : int
     league_name : str
     scoring_type : str
-    last_changed_date : date
+    last_changed_date : str
     teams: List[TeamBase] = []
 
 class Counts(BaseModel):
